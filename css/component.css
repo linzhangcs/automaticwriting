@@ -1,0 +1,584 @@
+@font-face {
+	font-weight: normal;
+	font-style: normal;
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon/icomoon.eot?-9heso');
+	src:url('../fonts/icomoon/icomoon.eot?#iefix-9heso') format('embedded-opentype'),
+		url('../fonts/icomoon/icomoon.woff?-9heso') format('woff'),
+		url('../fonts/icomoon/icomoon.ttf?-9heso') format('truetype'),
+		url('../fonts/icomoon/icomoon.svg?-9heso#icomoon') format('svg');
+}
+
+.simform {
+	position: relative;
+	margin: 0 auto;
+	padding: 2em 0;
+	max-width: 860px;
+	width: 100%;
+	text-align: left;
+	font-size: 1.9rem;
+	color: #9c8337;
+	font-family: "Khand", sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 100;
+}
+
+.simform .submit {
+	display: none;
+}
+
+/* Question list style */
+.simform ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	position: relative;
+	-webkit-transition: height 0.4s;
+	transition: height 0.4s;
+}
+
+.simform ol:before {
+	content: '';
+	background-color: rgba(0,0,0,0.1);
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 2.35em;
+}
+
+.questions li {
+	z-index: 100;
+	position: relative;
+	visibility: hidden;
+	height: 0;
+	-webkit-transition: visibility 0s 0.4s, height 0s 0.4s;
+	transition: visibility 0s 0.4s, height 0s 0.4s;
+}
+
+.questions li.current,
+.no-js .questions li {
+	visibility: visible;
+	height: auto;
+	-webkit-transition: none;
+	transition: none;
+}
+
+/* Labels */
+.questions li > span {
+	display: block;
+	overflow: hidden;
+}
+
+.questions li > span label {
+	display: block;
+	-webkit-transition: -webkit-transform 0.4s;
+	transition: transform 0.4s;
+	-webkit-transform: translateY(-100%);
+	transform: translateY(-100%);
+}
+
+.questions li.current > span label,
+.no-js .questions li > span label {
+	-webkit-transition: none;
+	transition: none;
+	-webkit-transform: translateY(0);
+	transform: translateY(0);
+}
+
+.show-next .questions li.current > span label {
+	-webkit-animation: moveUpFromDown 0.4s both;
+	animation: moveUpFromDown 0.4s both;
+}
+
+@-webkit-keyframes moveUpFromDown {
+	from { -webkit-transform: translateY(100%); }
+	to { -webkit-transform: translateY(0); }
+}
+
+@keyframes moveUpFromDown {
+	from { -webkit-transform: translateY(100%); transform: translateY(100%); }
+	to { -webkit-transform: translateY(0); transform: translateY(0); }
+}
+
+/* Input field */
+.questions input {
+	display: block;
+	margin: 0.3em 0 0 0;
+	padding: 0.5em 1em 0.5em 0.7em;
+	width: calc(100% - 2em);
+	border: none;
+	background: transparent;
+	color: rgba(0,0,0,0.8);
+	font-size: 1em;
+	line-height: 1;
+	opacity: 0;
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+}
+
+.questions .current input,
+.no-js .questions input {
+	opacity: 1;
+}
+
+.questions input:focus,
+.simform button:focus {
+	outline: none;
+}
+
+/* Next question button */
+.next {
+	position: absolute;
+	right: 0;
+	bottom: 2.15em; /* padding-bottom of form plus progress bar height */
+	display: block;
+	padding: 0;
+	width: 2em;
+	height: 2em;
+	border: none;
+	background: none;
+	color: rgba(0,0,0,0.4);
+	text-align: center;
+	opacity: 0;
+	z-index: 100;
+	cursor: pointer;
+	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+	transition: transform 0.3s, opacity 0.3s;
+	-webkit-transform: translateX(-20%);
+	transform: translateX(-20%);
+	pointer-events: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.next:hover {
+	color: rgba(0,0,0,0.5);
+}
+
+.next::after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	content: ">";
+	text-transform: none;
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
+	/* font-family: 'icomoon'; */
+	color: #000;
+	line-height: 2;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.next.show {
+	opacity: 1;
+	-webkit-transform: translateX(0);
+	transform: translateX(0);
+	pointer-events: auto;
+}
+
+/* Progress bar */
+.simform .progress {
+	width: 0%;
+	height: 0.15em;
+	background: rgba(0,0,0,0.3);
+	-webkit-transition: width 0.4s ease-in-out;
+	transition: width 0.4s ease-in-out;
+}
+
+.simform .progress::before {
+	position: absolute;
+	top: auto;
+	width: 100%;
+	height: inherit;
+	background: rgba(0,0,0,0.05);
+	content: '';
+}
+
+/* Number indicator */
+.simform .number {
+	position: absolute;
+	right: 0;
+	overflow: hidden;
+	margin: 0.4em 0;
+	width: 3em;
+	font-weight: 700;
+	font-size: 0.4em;
+}
+
+.simform .number:after {
+	position: absolute;
+	left: 50%;
+	content: '/';
+	opacity: 0.4;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+.simform .number span {
+	float: right;
+	width: 40%;
+	text-align: center;
+}
+
+.simform .number .number-current {
+	float: left;
+}
+
+.simform .number-next {
+	position: absolute;
+	left: 0;
+}
+
+.simform.show-next .number-current {
+	-webkit-transition: -webkit-transform 0.4s;
+	transition: transform 0.4s;
+	-webkit-transform: translateY(-100%);
+	transform: translateY(-100%);
+}
+
+.simform.show-next .number-next {
+	-webkit-animation: moveUpFromDown 0.4s both;
+	animation: moveUpFromDown 0.4s both;
+}
+
+/* Error and final message */
+.simform .error-message,
+.simform .final-message,
+.simform .answer{
+	position: absolute;
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transition: opacity 0.4s;
+	transition: opacity 0.4s;
+}
+
+.simform .error-message {
+	padding: 0.4em 3.5em 0 0;
+	width: 100%;
+	color: rgba(0,0,0,0.7);
+	font-style: italic;
+	font-size: 0.4em;
+}
+
+.final-message {
+	top: 50%;
+	left: 0;
+	padding: 0.5em;
+	width: 100%;
+	text-align: center;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+.error-message.show,
+.final-message.show,
+.answer.show {
+	visibility: visible;
+	opacity: 1;
+}
+
+.final-message.show{
+	-webkit-transition-delay: 0.5s;
+	transition-delay: 0.5s;
+}
+
+/* Final hiding of form / showing message */
+.simform-inner.hide {
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transition: opacity 0.3s, visibility 0s 0.3s;
+	transition: opacity 0.3s, visibility 0s 0.3s;
+	pointer-events: none;
+}
+
+/* No JS Fallback */
+.no-js .simform {
+	font-size: 1.75em;
+}
+
+.no-js .questions li {
+	padding: 0 0 2em;
+}
+
+.no-js .simform .submit {
+	display: block;
+	float: right;
+	padding: 10px 20px;
+	border: none;
+	background: rgba(0,0,0,0.3);
+	color: rgba(0,0,0,0.4);
+}
+
+.no-js .simform .controls {
+	display: none;
+}
+
+/* Remove IE clear cross */
+input[type=text]::-ms-clear {
+    display: none;
+}
+
+/* Adjust form for smaller screens */
+@media screen and (max-width: 44.75em) {
+	.simform {
+		font-size: 1.8em;
+	}
+}
+
+@media screen and (max-width: 33.5625em) {
+	.simform {
+		font-size: 1.2em;
+	}
+}
+
+/* main wrapper */
+.cbp-contentslider {
+	width: 80%;
+	height: 90%;
+	margin: 1em auto;
+	position: relative;
+	border: 4px solid #e0cdb8
+}
+
+.cbp-contentslider > ul {
+	list-style: none;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	padding: 0;
+	margin: 0;
+}
+
+.cbp-contentslider > ul li {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	padding: 1em;
+	background: #fff;
+}
+
+/* Whithout JS, we use :target */
+.cbp-contentslider > ul li:target {
+	z-index: 100;
+}
+
+.cbp-contentslider nav {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 3.313em;
+	z-index: 1000;
+	border-top: 4px solid #e0cdb8;
+	overflow: hidden;
+}
+
+.cbp-contentslider nav a {
+	float: left;
+	display: block;
+	width: 20%;
+	height: 100%;
+	font-weight: 400;
+	letter-spacing: 0.1em;
+	font-family: "Khand", sans-serif;
+	overflow: hidden;
+	color: #000;
+	background: #fff;
+	outline: none;
+	text-align: center;
+	line-height: 3;
+	position: relative;
+	padding-left: 3.125em;
+	text-transform: uppercase;
+	border-right: 4px solid #e0cdb8;
+	-webkit-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+	-moz-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+	transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.cbp-contentslider nav a span {
+	display: block;
+}
+
+.cbp-contentslider nav a:last-child {
+	border: none;
+	box-shadow: 1px 0 #e0cdb8; /* fills gap caused by rounding */
+}
+
+.cbp-contentslider nav a:hover {
+	background-color: #e0cdb8;
+	color: #fff;
+}
+
+.cbp-contentslider nav a.rc-active {
+	background-color: #e0cdb8;
+	color: #fff;
+}
+
+/* Iconfont for navigation and headings */
+.cbp-contentslider [class^="icon-"]:before,
+.cbp-contentslider [class*=" icon-"]:before {
+	font-family: 'icomoon';
+	font-style: normal;
+	text-align: center;
+	speak: none;
+	font-weight: normal;
+	line-height: 2.5;
+	font-size: 2em;
+	position: absolute;
+	left: 10%;
+	top: 50%;
+	margin: -1.250em 0 0 0;
+	height: 2.500em;
+	width: 2.500em;
+	color: rgba(0,0,0,0.1);
+	-webkit-font-smoothing: antialiased;
+}
+
+.cbp-contentslider .icon-wolf:before {
+	content: "\56";
+}
+
+.cbp-contentslider .icon-rabbit:before {
+	content: "\52";
+}
+
+.cbp-contentslider .icon-turtle:before {
+	content: "\54";
+}
+
+.cbp-contentslider .icon-platypus:before {
+	content: "\42";
+}
+
+.cbp-contentslider .icon-aligator:before {
+	content: "\41";
+}
+
+.cbp-contentslider [class^="icon-"].rc-active:before,
+.cbp-contentslider [class*=" icon-"].rc-active:before,
+.cbp-contentslider nav a:hover:before {
+	color: rgba(255,255,255,0.9);
+}
+
+.cbp-contentslider h3 {
+	font-size: 2em;
+	height: 2em;
+	line-height: 1.7;
+	font-weight: 100;
+	margin: 0 0 0.3em;
+	position: relative;
+	color: #000;
+	/* text-transform: uppercase; */
+	text-align: left;
+	padding: 0 0.2em 0 0;
+	border-bottom: 4px solid #e0cdb8;
+	font-family: "Khand", sans-serif;
+}
+
+.cbp-contentslider h3[class^="icon-"]:before,
+.cbp-contentslider h3[class*=" icon-"]:before {
+	top: 0;
+	left: 0;
+	width: 2em;
+	line-height: 1;
+	height: 1.2em;
+	margin: 0;
+	color: #e0cdb8;
+}
+
+.cbp-contentslider li > div {
+	position: absolute;
+	top: 9em;
+	bottom: 3.313em;
+	width: 100%;
+	left: 0;
+	padding: 0 1em;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+}
+
+.cbp-contentslider .cbp-content {
+	-webkit-column-rule: 1px dashed #e0cdb8;
+	-moz-column-rule: 1px dashed #e0cdb8;
+	column-rule: 1px dashed #e0cdb8;
+	-webkit-column-count: 2;
+	-moz-column-count: 2;
+	-o-column-count: 2;
+	column-count: 2;
+	-webkit-column-gap: 1em;
+	-moz-column-gap: 1em;
+	-o-column-gap: 1em;
+	column-gap: 1em;
+	vertical-align: top;
+	padding: 1em 0;
+}
+
+.cbp-contentslider p {
+	color: #000;
+	padding: 0 0.5em 0.4em;
+	margin: 0;
+	font-size: 1.2em;
+	font-weight: 300;
+	text-align: justify;
+	line-height: 1.6;
+	text-transform: capitalize;
+}
+
+/* Media queries */
+
+@media screen and (max-width: 70em) {
+	.cbp-contentslider p {
+		font-size: 100%;
+	}
+}
+
+@media screen and (max-width: 67.75em) {
+
+	.cbp-contentslider { font-size: 85%; }
+
+	.cbp-contentslider nav a[class^="icon-"]:before,
+	.cbp-contentslider nav a[class*=" icon-"]:before {
+		left: 50%;
+		margin-left: -1.250em;
+	}
+
+	.cbp-contentslider nav a span {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 43em) {
+
+	.cbp-contentslider h3 {
+		font-size: 2em;
+	}
+
+	.cbp-contentslider .cbp-content {
+		-webkit-column-count: 1;
+		-moz-column-count: 1;
+		-o-column-count: 1;
+		column-count: 1;
+	}
+
+	.cbp-contentslider li > div {
+		top: 5em;
+	}
+
+}
+
+@media screen and (max-width: 25em) {
+	.cbp-contentslider nav a { padding: 0;}
+	.cbp-contentslider h3[class^="icon-"]:before,
+	.cbp-contentslider h3[class*=" icon-"]:before { display: none;}
+}
